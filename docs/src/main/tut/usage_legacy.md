@@ -147,9 +147,12 @@ This container will allow you to map container ports to statically defined ports
 ```scala
 ...
 val container = FixedHostPortGenericContainer("nginx:latest",
-    waitStrategy = Wait.forHttp("/"),
-    exposedHostPort = 8090,
-    exposedContainerPort = 80
+    waitStrategy = new HttpWaitStrategy().forPath("/"),
+    portBindings = Seq((8090, 80))
+    // In the legacy release, it was: 
+    // waitStrategy = Wait.forHttp("/"),
+    // exposedHostPort = 8090,
+    // exposedContainerPort = 80
   )
 ```
 
